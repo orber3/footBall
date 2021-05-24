@@ -1,19 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var MatchReader_1 = require("./MatchReader");
-var MatchResults_1 = require("./MatchResults");
-var CsvFileReader_1 = require("./CsvFileReader");
-var csvFileREader = new CsvFileReader_1.CsvFileReader('football.csv');
-var matchReader = new MatchReader_1.MatchReader(csvFileREader);
+var Summary_1 = require("./Summary");
+// const csvFileREader = new CsvFileReader('football.csv')
+// const matchReader = new MatchReader(csvFileREader)
+var matchReader = MatchReader_1.MatchReader.fromCsvFile('football.csv');
 matchReader.load();
-var manUnitedWins = 0;
-for (var _i = 0, _a = matchReader.matches; _i < _a.length; _i++) {
-    var match = _a[_i];
-    if (match[1] === 'Man United' && match[5] === MatchResults_1.matchResults.HomeWin) {
-        manUnitedWins++;
-    }
-    else if (match[2] === 'Man United' && match[5] === MatchResults_1.matchResults.AwayWin) {
-        manUnitedWins++;
-    }
-}
-console.log("man united won " + manUnitedWins + " wins");
+var team = "Liverpool";
+// const summary = new Summary (
+//   new WinsAnalysis(team) , 
+//   new HtmlReport(team)
+// )
+var summary = Summary_1.Summary.winsAnalysiswithHtmlReport('Man United');
+summary.buildAndPrintReport(matchReader.matches);
